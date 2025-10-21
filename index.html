@@ -1,2 +1,578 @@
+<!doctype html>
+<html lang="en">
 
-hello my data-loom !
+<head>
+   <meta charset="utf-8" />
+   <meta name="viewport" content="width=device-width, initial-scale=1" />
+   <title>DataLoom — From intent to results</title>
+
+   <!-- Fonts & icons -->
+   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+   <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@300;400;600" rel="stylesheet" />
+
+   <style>
+      :root {
+         --bg: #0b0f14;
+         --bg-2: #0e141b;
+         --card: #121922;
+         --text: #e9eef5;
+         --muted: #a9b4c0;
+         --brand: #3aa6ff;
+         --brand-2: #7cf4ff;
+         --ring: 0 0 0 8px color-mix(in oklab, var(--brand) 18%, transparent);
+         --radius: 16px;
+         --maxw: 1100px;
+      }
+
+      @media (prefers-color-scheme: light) {
+         :root {
+            --bg: #f7fafc;
+            --bg-2: #ffffff;
+            --card: #ffffff;
+            --text: #10151b;
+            --muted: #536173;
+            --brand: #1769ff;
+            --brand-2: #00d6ff;
+         }
+      }
+
+      * {
+         box-sizing: border-box
+      }
+
+      html,
+      body {
+         margin: 0
+      }
+
+      body {
+         font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+         background:
+            radial-gradient(1200px 600px at 70% -10%, color-mix(in oklab, var(--brand) 12%, transparent), transparent 60%),
+            var(--bg);
+         color: var(--text);
+         line-height: 1.6;
+      }
+
+      a {
+         color: inherit
+      }
+
+      .container {
+         max-width: var(--maxw);
+         margin: 0 auto;
+         padding: 0 20px
+      }
+
+      .section {
+         padding: 80px 0
+      }
+
+      .eyebrow {
+         letter-spacing: .12em;
+         text-transform: uppercase;
+         color: var(--muted);
+         font-weight: 600;
+         font-size: .85rem
+      }
+
+      .h1 {
+         font-size: clamp(2.4rem, 4.5vw + .5rem, 4.5rem);
+         line-height: 1.05;
+         margin: 0 0 12px
+      }
+
+      .h2 {
+         font-size: clamp(1.6rem, 2vw + .6rem, 2.2rem);
+         line-height: 1.2;
+         margin: 0 0 10px
+      }
+
+      .lead {
+         color: var(--muted);
+         font-size: clamp(1.05rem, .7vw + .9rem, 1.2rem)
+      }
+
+      .btn {
+         display: inline-flex;
+         align-items: center;
+         gap: .6rem;
+         padding: 14px 20px;
+         border-radius: 999px;
+         font-weight: 700;
+         text-decoration: none;
+         transition: transform .08s ease, box-shadow .2s ease, background .2s ease;
+         box-shadow: 0 8px 20px -6px color-mix(in oklab, var(--brand) 60%, transparent);
+      }
+
+      .btn.primary {
+         background: linear-gradient(135deg, color-mix(in oklab, var(--brand) 95%, white 10%), var(--brand-2));
+         color: white;
+         text-shadow: 0 1px 4px rgba(0, 0, 0, .25);
+      }
+
+      .btn.primary:hover {
+         transform: translateY(-1px);
+         box-shadow: 0 10px 24px -8px color-mix(in oklab, var(--brand) 80%, transparent);
+      }
+
+      .btn.secondary {
+         background: linear-gradient(135deg, rgba(255, 255, 255, 0.18), rgba(255, 255, 255, 0.05));
+         color: var(--text);
+         box-shadow: none;
+         backdrop-filter: blur(6px);
+         border: 1px solid rgba(255, 255, 255, 0.15);
+      }
+
+      /* Hero (parallax) – use background-position, not transform, to avoid seams */
+      .hero-parallax {
+         position: relative;
+         min-height: 100vh;
+         /* 80% screen as requested */
+         display: flex;
+         align-items: center;
+         border-bottom: 1px solid color-mix(in oklab, var(--text) 8%, transparent);
+         overflow: hidden;
+         color: #fff;
+         isolation: isolate;
+      }
+
+      .hero-backdrop {
+         position: absolute;
+         inset: 0;
+         /* fill hero fully */
+         background: center / cover no-repeat url('background.jpeg');
+         /* Parallax via background-position Y; no element movement -> no gap */
+         background-position: center var(--hero-parallax-bg, 0px);
+         will-change: background-position;
+         z-index: 0;
+      }
+
+      .hero-content {
+         position: relative;
+         width: 100%;
+         display: flex;
+         justify-content: center;
+         padding: 32px 0 96px;
+         /* a little breathing room since hero is 80vh */
+         transform: translate3d(0, var(--hero-parallax-fg, 0px), 0);
+         will-change: transform;
+         z-index: 1;
+         text-shadow: 0 3px 6px rgba(0, 0, 0, .45);
+      }
+
+      .hero-content .title-wrap {
+         max-width: 900px;
+         margin: 0 auto;
+         text-align: center;
+      }
+
+      .hero-content .actions {
+         margin-top: 24px;
+         display: flex;
+         justify-content: center;
+         gap: 12px;
+         flex-wrap: wrap;
+      }
+
+      .hero-content .lead {
+         color: rgba(255, 255, 255, .9);
+         font-weight: 400;
+         text-shadow: 0 2px 6px rgba(0, 0, 0, .55);
+         max-width: 720px;
+         margin: 0 auto 24px;
+      }
+
+      @media (max-width: 900px) {
+         .hero-parallax {
+            min-height: 72vh;
+         }
+
+         .hero-content {
+            padding: 72px 0 72px;
+         }
+      }
+
+      /* Metrics (big numbers) */
+      .metrics {
+         background: linear-gradient(180deg, var(--bg-2), transparent);
+      }
+
+      .metric-grid {
+         display: grid;
+         grid-template-columns: repeat(3, 1fr);
+         gap: 22px;
+      }
+
+      .metric {
+         background: var(--card);
+         border: 1px solid color-mix(in oklab, var(--text) 10%, transparent);
+         border-radius: var(--radius);
+         padding: 28px;
+         text-align: center;
+      }
+
+      .stat {
+         font-size: clamp(3rem, 6vw, 5rem);
+         font-weight: 800;
+         letter-spacing: -.02em;
+         background: linear-gradient(180deg, var(--brand-2), var(--brand));
+         -webkit-background-clip: text;
+         background-clip: text;
+         color: transparent;
+         margin-bottom: 8px;
+      }
+
+      .metric h3 {
+         margin: .2rem 0;
+         font-size: 1.25rem
+      }
+
+      .metric p {
+         margin: 0;
+         color: var(--muted)
+      }
+
+      /* Icon feature grid */
+      .features {
+         background: radial-gradient(800px 400px at 20% 0%, color-mix(in oklab, var(--brand) 12%, transparent), transparent 60%);
+      }
+
+      .feature-grid {
+         display: grid;
+         gap: 18px;
+         grid-template-columns: repeat(3, 1fr);
+      }
+
+      .feature {
+         background: var(--card);
+         border: 1px solid color-mix(in oklab, var(--text) 10%, transparent);
+         border-radius: var(--radius);
+         padding: 22px;
+         display: flex;
+         gap: 14px;
+         align-items: flex-start;
+      }
+
+      .icon {
+         font-family: "Material Symbols Outlined";
+         font-variation-settings: 'FILL' 0, 'wght' 500, 'GRAD' 0, 'opsz' 40;
+         font-size: 28px;
+         line-height: 28px;
+         color: var(--brand-2);
+         flex: 0 0 auto;
+         margin-top: 4px;
+      }
+
+      .feature h4 {
+         margin: .1rem 0 .25rem
+      }
+
+      .feature p {
+         margin: 0;
+         color: var(--muted)
+      }
+
+      /* Newsletter */
+      .cta {
+         text-align: center;
+         background: linear-gradient(180deg, transparent, color-mix(in oklab, var(--brand) 6%, transparent));
+      }
+
+      .cta-card {
+         background: var(--card);
+         border: 1px solid color-mix(in oklab, var(--text) 10%, transparent);
+         border-radius: calc(var(--radius) + 6px);
+         padding: 28px;
+         max-width: 760px;
+         margin: 0 auto;
+         display: flex;
+         flex-direction: column;
+         gap: 14px;
+         align-items: center;
+      }
+
+      /* Team */
+      .team-grid {
+         display: grid;
+         gap: 18px;
+         grid-template-columns: repeat(3, 1fr);
+      }
+
+      .person {
+         background: var(--card);
+         border: 1px solid color-mix(in oklab, var(--text) 10%, transparent);
+         border-radius: var(--radius);
+         overflow: hidden;
+         display: flex;
+         flex-direction: column;
+      }
+
+      .person img {
+         width: 100%;
+         aspect-ratio: 4/3;
+         object-fit: cover
+      }
+
+      .person .bio {
+         padding: 16px
+      }
+
+      .person h4 {
+         margin: .2rem 0 .35rem
+      }
+
+      .person p {
+         margin: 0;
+         color: var(--muted);
+         font-size: .98rem
+      }
+
+      /* Footer */
+      footer {
+         padding: 40px 0;
+         color: var(--muted);
+         text-align: center;
+         font-size: .95rem
+      }
+
+      /* Responsive */
+      @media (max-width: 900px) {
+
+         .metric-grid,
+         .feature-grid,
+         .team-grid {
+            grid-template-columns: 1fr
+         }
+
+         .section {
+            padding: 64px 0
+         }
+      }
+
+      /* Accessibility: disable parallax for reduced motion */
+      @media (prefers-reduced-motion: reduce) {
+         .hero-content {
+            transform: none !important;
+         }
+
+         .hero-backdrop {
+            background-position: center 0 !important;
+         }
+      }
+   </style>
+</head>
+
+<body>
+   <!-- HERO -->
+   <header class="hero-parallax">
+      <div class="hero-backdrop" aria-hidden="true"></div>
+
+      <div class="hero-content">
+         <div class="container">
+            <div class="title-wrap">
+               <div class="eyebrow">Agentic Data Analytics Platform</div>
+               <h1 class="h1">DataLoom: From Intent to Results</h1>
+               <p class="lead">Ask in natural language. DataLoom weaves data sources, analyses, and visuals into instant
+                  answers.</p>
+               <div class="actions">
+                  <a class="btn primary" href="https://forms.gle/fP6t4v38FqjcoZxq5" target="_blank" rel="noopener">
+                     <span class="material-symbols-outlined" style="font-size:20px">rocket_launch</span>
+                     Join the waitlist
+                  </a>
+               </div>
+            </div>
+         </div>
+      </div>
+   </header>
+
+   <!-- METRICS -->
+   <section class="section metrics">
+      <div class="container">
+         <div class="metric-grid">
+            <div class="metric">
+               <div class="stat">32h</div>
+               <h3>manual reporting reclaimed</h3>
+               <p>Automate the tedious processes so teams get their evenings back.</p>
+            </div>
+            <div class="metric">
+               <div class="stat">20×</div>
+               <h3>faster path to insight</h3>
+               <p>Find answers quickly while the questions are still relevant.</p>
+            </div>
+            <div class="metric">
+               <div class="stat">80%</div>
+               <h3>less SQL code</h3>
+               <p>Fast data analytics with minimal SQL background.</p>
+            </div>
+         </div>
+      </div>
+   </section>
+
+   <!-- FEATURES -->
+   <section class="section features">
+      <div class="container">
+         <div class="eyebrow">What you get</div>
+         <h2 class="h2">No-Code Data Analytics</h2>
+
+         <div class="feature-grid">
+            <article class="feature">
+               <div class="icon">diversity_3</div>
+               <div>
+                  <h4>Democratized Data Science</h4>
+                  <p>We enable each and every one to perform data analysis without needing a PhD in statistics.</p>
+               </div>
+            </article>
+
+            <article class="feature">
+               <div class="icon">visibility</div>
+               <div>
+                  <h4>Transparent Results</h4>
+                  <p>Every step in our pipelines is fully auditable and explainable.</p>
+               </div>
+            </article>
+
+            <article class="feature">
+               <div class="icon">bolt</div>
+               <div>
+                  <h4>Fast Execution</h4>
+                  <p>Our architecture uses decades of database research to efficiently process huge amounts of data in
+                     real-time. No more waiting for your reports!
+                  </p>
+               </div>
+            </article>
+
+            <article class="feature">
+               <div class="icon">savings</div>
+               <div>
+                  <h4>Cost-Effective</h4>
+                  <p>Leveraging databases for processing allows us to minimize LLM costs.</p>
+               </div>
+            </article>
+
+            <article class="feature">
+               <div class="icon">lock</div>
+               <div>
+                  <h4>Data Privacy</h4>
+                  <p>We prioritize your data privacy and ensure compliance with regulations, by not leaking ANY
+                     information into the cloud or third parties. <strong>100% on-premise.</strong></p>
+               </div>
+            </article>
+
+            <article class="feature">
+               <div class="icon">autorenew</div>
+               <div>
+                  <h4>Repeatable Execution</h4>
+                  <p>In contrast to other solutions, our approach builds code that allows to re-execute any pipeline on
+                     new data.</p>
+               </div>
+            </article>
+         </div>
+      </div>
+   </section>
+
+   <!-- NEWSLETTER / WAITLIST -->
+   <section id="newsletter" class="section cta">
+      <div class="container">
+         <div class="cta-card">
+            <div class="eyebrow">Stay in the Loom</div>
+            <h2 class="h2" style="margin:0">Join the DataLoom Waiting List</h2>
+            <p class="lead">Limited early access. We’ll notify you when invites open.</p>
+            <a class="btn primary" href="https://forms.gle/fP6t4v38FqjcoZxq5" target="_blank" rel="noopener">
+               <span class="material-symbols-outlined" style="font-size:20px">how_to_reg</span>
+               Sign up now
+            </a>
+            <small style="color:var(--muted)">We respect your inbox. Unsubscribe anytime.</small>
+         </div>
+      </div>
+   </section>
+
+   <!-- TEAM -->
+   <section class="section">
+      <div class="container">
+         <div class="eyebrow">Team</div>
+         <h2 class="h2">Humans behind the Loom</h2>
+
+         <div class="team-grid" style="margin-top:16px">
+            <article class="person">
+               <img src="andreas-kipf-480.webp" alt="Andreas" />
+               <div class="bio">
+                  <h4>Andreas Kipf</h4>
+                  <p>Professor in the Data Systems lab at UTN. PhD at TUM, PostDoc at MIT, and two years of AWS. Loves
+                     making customers happy. 🚴‍♂️</p>
+               </div>
+            </article>
+
+            <article class="person">
+               <img src="alexander-van-renen-480.webp" alt="Alex" />
+               <div class="bio">
+                  <h4>Alex van Renen</h4>
+                  <p>Postdoc in the Data Systems lab at UTN. PhD at TUM, PostDoc at FAU, and two years of AWS. Loves
+                     making pipelines go brrrrr. 🐢</p>
+               </div>
+            </article>
+
+            <article class="person">
+               <img src="luca-heller-480.webp" alt="Luca — Engineering" />
+               <div class="bio">
+                  <h4>Luca Heller</h4>
+                  <p>Student researcher in the Data Systems lab at UTN. Bachelors in statistics at LMU and now the very
+                     first student at UTN. Loves making complicated math transparent for you. ⛵️</p>
+               </div>
+            </article>
+         </div>
+      </div>
+   </section>
+
+   <footer>
+      <div class="container">© <span id="y"></span> DataLoom — All rights reserved.</div>
+   </footer>
+
+   <script>
+      (function () {
+         // Current year
+         document.getElementById('y').textContent = new Date().getFullYear();
+
+         const hero = document.querySelector('.hero-parallax');
+         if (!hero) return;
+
+         let bounds = { start: hero.offsetTop, height: Math.max(hero.offsetHeight, 1) };
+
+         const recalc = () => {
+            bounds.start = hero.offsetTop;
+            bounds.height = Math.max(hero.offsetHeight, 1);
+         };
+
+         const applyParallax = () => {
+            const scroll = window.scrollY || window.pageYOffset || 0;
+            const relative = scroll - bounds.start;
+            const clamped = Math.max(0, Math.min(relative, bounds.height));
+
+            // Background: move the image a bit slower upwards (negative = up)
+            const bgShift = -clamped * 0.22; // tweak factor
+            // Foreground: subtle counter-motion for depth (optional)
+            const fgShift = clamped * 0.05;
+
+            hero.style.setProperty('--hero-parallax-bg', `${bgShift}px`);
+            hero.style.setProperty('--hero-parallax-fg', `${fgShift}px`);
+            ticking = false;
+         };
+
+         let ticking = false;
+         const onScroll = () => {
+            if (!ticking) {
+               requestAnimationFrame(applyParallax);
+               ticking = true;
+            }
+         };
+
+         window.addEventListener('scroll', onScroll, { passive: true });
+         window.addEventListener('resize', () => { recalc(); applyParallax(); });
+
+         recalc();
+         applyParallax();
+      })();
+   </script>
+</body>
+
+</html>
