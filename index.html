@@ -273,6 +273,27 @@
          color: var(--muted)
       }
 
+      /* Card hover lift */
+      .metric,
+      .feature,
+      .cta-card,
+      .person {
+         transition: transform .2s ease, box-shadow .28s ease;
+         will-change: transform;
+      }
+
+      .metric:hover,
+      .metric:focus-within,
+      .feature:hover,
+      .feature:focus-within,
+      .cta-card:hover,
+      .cta-card:focus-within,
+      .person:hover,
+      .person:focus-within {
+         transform: translateY(-4px) scale(1.02);
+         box-shadow: 0 22px 36px -26px color-mix(in oklab, var(--brand) 55%, transparent);
+      }
+
       /* Newsletter */
       .cta {
          text-align: center;
@@ -395,6 +416,25 @@
 
          .hero-backdrop {
             background-position: center 0 !important;
+         }
+
+         .metric,
+         .feature,
+         .cta-card,
+         .person {
+            transition: none !important;
+         }
+
+         .metric:hover,
+         .metric:focus-within,
+         .feature:hover,
+         .feature:focus-within,
+         .cta-card:hover,
+         .cta-card:focus-within,
+         .person:hover,
+         .person:focus-within {
+            transform: none !important;
+            box-shadow: none !important;
          }
       }
    </style>
