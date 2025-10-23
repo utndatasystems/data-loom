@@ -322,10 +322,47 @@
          margin: .2rem 0 .35rem
       }
 
+      .person h4 a {
+         color: inherit;
+         text-decoration: none;
+      }
+
+      .person h4 a:hover,
+      .person h4 a:focus {
+         text-decoration: underline;
+      }
+
       .person p {
          margin: 0;
          color: var(--muted);
          font-size: .98rem
+      }
+
+      .person .connect {
+         margin-top: 16px;
+      }
+
+      .person .social-links {
+         display: flex;
+         gap: 12px;
+         align-items: center;
+      }
+
+      .person .social-links a {
+         display: inline-flex;
+         width: 28px;
+         height: 28px;
+      }
+
+      .person .social-links img {
+         width: 100%;
+         height: 100%;
+         object-fit: contain;
+      }
+
+      .person .social-links a:hover img,
+      .person .social-links a:focus img {
+         transform: scale(1.05);
       }
 
       /* Footer */
@@ -497,27 +534,75 @@
             <article class="person">
                <img src="andreas-kipf-480.webp" alt="Andreas" />
                <div class="bio">
-                  <h4>Andreas Kipf</h4>
+                  <h4><a href="" class="person-link">Andreas Kipf</a></h4>
                   <p>Professor in the Data Systems lab at UTN. PhD at TUM, PostDoc at MIT, and two years of AWS. Loves
                      making customers happy. 🚴‍♂️</p>
+                  <div class="connect">
+                     <div class="social-links">
+                        <a href="https://www.linkedin.com/in/andreaskipf/" target="_blank" rel="noopener"
+                           aria-label="Connect with Andreas on LinkedIn">
+                           <img src="LI-In-Bug.png" alt="LinkedIn" />
+                        </a>
+                        <a href="https://github.com/andreaskipf" target="_blank" rel="noopener"
+                           aria-label="View Andreas on GitHub">
+                           <img src="github-mark.png" alt="GitHub" />
+                        </a>
+                        <a href="https://x.com/andreaskipf" target="_blank" rel="noopener"
+                           aria-label="Follow Andreas on X">
+                           <img src="x-logo.png" alt="X" />
+                        </a>
+                        <a href="https://bsky.app/profile/andreaskipf.bsky.social" target="_blank" rel="noopener"
+                           aria-label="Follow Andreas on Bluesky">
+                           <img src="bluesky.png" alt="Bluesky" />
+                        </a>
+                     </div>
+                  </div>
                </div>
             </article>
 
             <article class="person">
                <img src="alexander-van-renen-480.webp" alt="Alex" />
                <div class="bio">
-                  <h4>Alex van Renen</h4>
+                  <h4><a href="" class="person-link">Alex van Renen</a></h4>
                   <p>Postdoc in the Data Systems lab at UTN. PhD at TUM, PostDoc at FAU, and two years of AWS. Loves
                      making pipelines go brrrrr. 🐢</p>
+                  <div class="connect">
+                     <div class="social-links">
+                        <a href="https://www.linkedin.com/in/alexander-van-renen-5133a280/" target="_blank"
+                           rel="noopener" aria-label="Connect with Alex on LinkedIn">
+                           <img src="LI-In-Bug.png" alt="LinkedIn" />
+                        </a>
+                        <a href="https://github.com/alexandervanrenen" target="_blank" rel="noopener"
+                           aria-label="View Alex on GitHub">
+                           <img src="github-mark.png" alt="GitHub" />
+                        </a>
+                        <a href="https://bsky.app/profile/alexandervanrenen.bsky.social" target="_blank" rel="noopener"
+                           aria-label="Follow Alex on Bluesky">
+                           <img src="bluesky.png" alt="Bluesky" />
+                        </a>
+                     </div>
+                  </div>
                </div>
             </article>
 
             <article class="person">
                <img src="luca-heller-480.webp" alt="Luca — Engineering" />
                <div class="bio">
-                  <h4>Luca Heller</h4>
+                  <h4><a href="" class="person-link">Luca Heller</a></h4>
                   <p>Student researcher in the Data Systems lab at UTN. Bachelors in statistics at LMU and now the very
                      first student at UTN. Loves making complicated math transparent for you. ⛵️</p>
+                  <div class="connect">
+                     <div class="social-links">
+                        <a href="https://www.linkedin.com/in/luca-sophia-heller-b8909b250/" target="_blank"
+                           rel="noopener" aria-label="Connect with Luca on LinkedIn">
+                           <img src="LI-In-Bug.png" alt="LinkedIn" />
+                        </a>
+                        <a href="https://github.com/luca-heller" target="_blank" rel="noopener"
+                           aria-label="View Luca on GitHub">
+                           <img src="github-mark.png" alt="GitHub" />
+                        </a>
+                     </div>
+                  </div>
                </div>
             </article>
          </div>
