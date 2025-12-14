@@ -234,6 +234,176 @@
       }
 
       /* Icon feature grid */
+      /* Showcase carousel */
+      .showcase {
+         background: radial-gradient(800px 420px at 20% 0%, color-mix(in oklab, var(--brand) 12%, transparent), transparent 60%);
+      }
+
+      .showcase-shell {
+         display: flex;
+         flex-direction: column;
+         gap: 18px;
+         text-align: center;
+      }
+
+      .showcase-window {
+         position: relative;
+         background: transparent;
+         border: 0;
+         border-radius: calc(var(--radius) + 8px);
+         padding: 0;
+         overflow: visible;
+         box-shadow: none;
+         width: 100%;
+         min-height: 720px;
+         transition: height .35s ease;
+      }
+
+      .showcase-slide {
+         position: absolute;
+         inset: 0;
+         display: flex;
+         flex-direction: column;
+         gap: 16px;
+         opacity: 0;
+         transform: translateX(6%);
+         transition: opacity .45s ease, transform .45s ease;
+         pointer-events: none;
+      }
+
+      .showcase-slide.active {
+         opacity: 1;
+         transform: translateX(0);
+         pointer-events: auto;
+      }
+
+      .showcase-media {
+         position: relative;
+         background: var(--bg-2);
+         border-radius: calc(var(--radius) + 4px);
+         overflow: hidden;
+         border: 1px solid color-mix(in oklab, var(--text) 8%, transparent);
+      }
+
+      .showcase-media::after {
+         content: "";
+         position: absolute;
+         inset: 0;
+         pointer-events: none;
+         background: linear-gradient(180deg, rgba(0, 0, 0, 0.03), transparent 18%, transparent 76%, rgba(0, 0, 0, 0.18));
+      }
+
+      .showcase-media img {
+         width: 100%;
+         display: block;
+         border-radius: calc(var(--radius) + 4px);
+         box-shadow: 0 22px 50px -32px rgba(0, 0, 0, 0.65);
+         cursor: zoom-in;
+      }
+
+      .showcase-card {
+         background: var(--card);
+         border: 1px solid color-mix(in oklab, var(--text) 10%, transparent);
+         border-radius: var(--radius);
+         padding: 18px 20px;
+         box-shadow: 0 18px 48px -34px color-mix(in oklab, var(--brand) 45%, transparent);
+         text-align: left;
+      }
+
+      .showcase-card h4 {
+         margin: .1rem 0 .3rem;
+         letter-spacing: -.01em;
+      }
+
+      .showcase-card p {
+         margin: 0;
+         color: var(--muted);
+      }
+
+      .showcase-controls {
+         display: flex;
+         align-items: center;
+         gap: 12px;
+         flex-wrap: wrap;
+         justify-content: center;
+         margin: 2px 2px 4px;
+      }
+
+      .showcase-btn {
+         display: inline-flex;
+         align-items: center;
+         justify-content: center;
+         width: 42px;
+         height: 42px;
+         border: 0;
+         border-radius: 50%;
+         background: color-mix(in oklab, var(--brand) 18%, transparent);
+         color: var(--text);
+         cursor: pointer;
+         transition: transform .15s ease, box-shadow .2s ease, background .2s ease;
+      }
+
+      .showcase-btn:hover,
+      .showcase-btn:focus-visible {
+         transform: translateY(-1px);
+         background: color-mix(in oklab, var(--brand) 28%, transparent);
+         box-shadow: 0 10px 24px -12px color-mix(in oklab, var(--brand) 60%, transparent);
+      }
+
+      .showcase-dots {
+         display: inline-flex;
+         gap: 8px;
+         align-items: center;
+      }
+
+      .showcase-dot {
+         width: 12px;
+         height: 12px;
+         border-radius: 999px;
+         border: 1px solid color-mix(in oklab, var(--text) 40%, transparent);
+         background: color-mix(in oklab, var(--text) 12%, transparent);
+         cursor: pointer;
+         transition: width .18s ease, background .18s ease, border-color .18s ease;
+      }
+
+      .showcase-dot.active {
+         width: 28px;
+         background: linear-gradient(135deg, var(--brand), var(--brand-2));
+         border-color: transparent;
+      }
+
+      .showcase-footnote {
+         color: var(--muted);
+         margin-top: 4px;
+      }
+
+      .lightbox {
+         position: fixed;
+         inset: 0;
+         background: rgba(0, 0, 0, 0.78);
+         display: none;
+         align-items: center;
+         justify-content: center;
+         z-index: 9999;
+         padding: 28px;
+         backdrop-filter: blur(4px);
+      }
+
+      .lightbox.open {
+         display: flex;
+      }
+
+      .lightbox img {
+         max-width: min(1200px, 96vw);
+         max-height: 90vh;
+         border-radius: var(--radius);
+         box-shadow: 0 24px 70px -30px rgba(0, 0, 0, 0.75);
+         background: var(--bg-2);
+         object-fit: contain;
+         cursor: zoom-out;
+      }
+
+      /* Icon feature grid */
       .features {
          background: radial-gradient(800px 400px at 20% 0%, color-mix(in oklab, var(--brand) 12%, transparent), transparent 60%);
       }
@@ -465,6 +635,11 @@
             grid-template-columns: 1fr
          }
 
+         .showcase-window {
+            padding: 0;
+            min-height: 560px;
+         }
+
          .section {
             padding: 64px 0
          }
@@ -543,6 +718,83 @@
                <div class="stat">80%</div>
                <h3>less SQL code</h3>
                <p>Fast data analytics with minimal SQL background.</p>
+            </div>
+         </div>
+      </div>
+   </section>
+
+   <!-- SHOWCASE -->
+   <section class="section showcase">
+      <div class="container">
+         <div class="showcase-shell">
+            <div>
+               <div class="eyebrow">Product preview</div>
+               <h2 class="h2" style="margin-bottom:10px">See DataLoom in action</h2>
+            </div>
+
+            <div class="showcase-window">
+               <article class="showcase-slide active" data-index="0">
+                  <div class="showcase-media">
+                     <img src="screenshots/screenshots.001.png"
+                        alt="DataLoom screenshot of a natural language query turning into a pipeline" loading="lazy" />
+                  </div>
+                  <div class="showcase-controls" aria-label="Screenshot carousel controls">
+                     <button class="showcase-btn" type="button" data-dir="prev" aria-label="Previous screenshot">
+                        <span class="material-symbols-outlined" aria-hidden="true">arrow_back</span>
+                     </button>
+                     <div class="showcase-dots" aria-label="Select screenshot"></div>
+                     <button class="showcase-btn" type="button" data-dir="next" aria-label="Next screenshot">
+                        <span class="material-symbols-outlined" aria-hidden="true">arrow_forward</span>
+                     </button>
+                  </div>
+                  <div class="showcase-card">
+                     <h4>Ask, See, Adjust</h4>
+                     <p>Describe the outcome you want; DataLoom creates the analysis, using state of the art database
+                        technology under the hood with DuckDb.</p>
+                  </div>
+               </article>
+
+               <article class="showcase-slide" data-index="1" aria-hidden="true">
+                  <div class="showcase-media">
+                     <img src="screenshots/screenshots.002.png" alt="DataLoom screenshot of visual insights and charts"
+                        loading="lazy" />
+                  </div>
+                  <div class="showcase-controls" aria-label="Screenshot carousel controls">
+                     <button class="showcase-btn" type="button" data-dir="prev" aria-label="Previous screenshot">
+                        <span class="material-symbols-outlined" aria-hidden="true">arrow_back</span>
+                     </button>
+                     <div class="showcase-dots" aria-label="Select screenshot"></div>
+                     <button class="showcase-btn" type="button" data-dir="next" aria-label="Next screenshot">
+                        <span class="material-symbols-outlined" aria-hidden="true">arrow_forward</span>
+                     </button>
+                  </div>
+                  <div class="showcase-card">
+                     <h4>Instant Loading</h4>
+                     <p>Ever felt the frustration while fixing data loading issues? DataLoom uses AI-driven heuristics
+                        to detect and automatically resolve many common problems.</p>
+                  </div>
+               </article>
+
+               <article class="showcase-slide" data-index="2" aria-hidden="true">
+                  <div class="showcase-media">
+                     <img src="screenshots/screenshots.003.png" alt="DataLoom screenshot of reusable workflows and runs"
+                        loading="lazy" />
+                  </div>
+                  <div class="showcase-controls" aria-label="Screenshot carousel controls">
+                     <button class="showcase-btn" type="button" data-dir="prev" aria-label="Previous screenshot">
+                        <span class="material-symbols-outlined" aria-hidden="true">arrow_back</span>
+                     </button>
+                     <div class="showcase-dots" aria-label="Select screenshot"></div>
+                     <button class="showcase-btn" type="button" data-dir="next" aria-label="Next screenshot">
+                        <span class="material-symbols-outlined" aria-hidden="true">arrow_forward</span>
+                     </button>
+                  </div>
+                  <div class="showcase-card">
+                     <h4>Data Imputation</h4>
+                     <p>DataLoom can intelligently fill in missing values in your datasets, ensuring you always have a
+                        complete picture.</p>
+                  </div>
+               </article>
             </div>
          </div>
       </div>
@@ -781,6 +1033,109 @@
 
          recalc();
          applyParallax();
+      })();
+
+      (function () {
+         const root = document.querySelector('.showcase');
+         if (!root) return;
+
+         const windowEl = root.querySelector('.showcase-window');
+         const slides = Array.from(root.querySelectorAll('.showcase-slide'));
+         const dotGroups = Array.from(root.querySelectorAll('.showcase-dots'));
+         const navButtons = Array.from(root.querySelectorAll('.showcase-btn'));
+         if (!windowEl || !slides.length || !dotGroups.length) return;
+
+         const dots = [];
+         let active = 0;
+         let timer;
+         const lightbox = document.createElement('div');
+         lightbox.className = 'lightbox';
+         lightbox.innerHTML = '<img alt="">';
+         document.body.appendChild(lightbox);
+         const lightboxImg = lightbox.querySelector('img');
+
+         const updateHeight = () => {
+            if (!slides[active]) return;
+            const target = slides[active];
+            requestAnimationFrame(() => {
+               const minH = parseFloat(getComputedStyle(windowEl).minHeight) || 0;
+               const rectH = target.getBoundingClientRect().height || 0;
+               const nextH = Math.max(rectH, minH);
+               windowEl.style.height = `${nextH}px`;
+            });
+         };
+
+         const setActive = (idx, restart = true) => {
+            active = (idx + slides.length) % slides.length;
+            slides.forEach((slide, i) => {
+               const isActive = i === active;
+               slide.classList.toggle('active', isActive);
+               slide.setAttribute('aria-hidden', isActive ? 'false' : 'true');
+            });
+            dots.forEach(group => group.forEach((dot, i) => {
+               dot.classList.toggle('active', i === active);
+            }));
+            updateHeight();
+            if (restart) resetTimer();
+         };
+
+         const resetTimer = () => {
+            clearInterval(timer);
+            timer = setInterval(() => setActive(active + 1, false), 5200);
+         };
+
+         dotGroups.forEach(group => {
+            const groupDots = [];
+            slides.forEach((_, i) => {
+               const dot = document.createElement('button');
+               dot.className = 'showcase-dot';
+               dot.type = 'button';
+               dot.setAttribute('aria-label', `Go to screenshot ${i + 1}`);
+               dot.addEventListener('click', () => setActive(i));
+               group.appendChild(dot);
+               groupDots.push(dot);
+            });
+            dots.push(groupDots);
+         });
+
+         navButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+               const dir = btn.dataset.dir === 'prev' ? -1 : 1;
+               setActive(active + dir);
+            });
+         });
+
+         ['mouseenter', 'focusin'].forEach(evt => windowEl.addEventListener(evt, () => clearInterval(timer), true));
+         ['mouseleave', 'focusout'].forEach(evt => windowEl.addEventListener(evt, () => resetTimer(), true));
+
+         document.addEventListener('visibilitychange', () => {
+            if (document.hidden) {
+               clearInterval(timer);
+            } else {
+               resetTimer();
+            }
+         });
+
+         window.addEventListener('resize', updateHeight);
+         slides.forEach(slide => {
+            slide.querySelectorAll('img').forEach(img => img.addEventListener('load', updateHeight));
+            slide.querySelectorAll('.showcase-media img').forEach(img => {
+               img.addEventListener('click', () => {
+                  lightboxImg.src = img.src;
+                  lightboxImg.alt = img.alt || 'Expanded screenshot';
+                  lightbox.classList.add('open');
+               });
+            });
+         });
+
+         lightbox.addEventListener('click', () => lightbox.classList.remove('open'));
+         document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') lightbox.classList.remove('open');
+         });
+
+         setActive(0, false);
+         updateHeight();
+         resetTimer();
       })();
    </script>
 </body>
